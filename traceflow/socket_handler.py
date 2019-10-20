@@ -20,8 +20,9 @@ class socket_handler:
         os_release = platform.system()
         if os_release == "Darwin":
             # Boned. TODO: Work on fixing this.
-            print("Detected Mac OS - Cannot support writing of raw IP packets, exiting")
-            exit(1)
+            # Use pypcap on osx to send raw packets
+            import pcap
+            self.raw_socket = pcap.pcap()
         if os_release.endswith("BSD"):
             # BSD - Need to explicit set IP_HDRINCL.
             # BSD - Need to explicitly calculate IP total length
